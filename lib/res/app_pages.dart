@@ -1,4 +1,4 @@
 class AppPages{
-  static String Login = "/";
-  static String Registration = "/registration";
+  static const String Login = "/";
+  static const String Registration = "/registration";
 }
