@@ -15,6 +15,9 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   bool isVisible = true;
   bool isDateSelect = false;
+  bool isDistrictOpen = false;
+  bool isBlockOpen = false;
+  bool isChecked = false;
   DateTime selectedDate = DateTime.now();
   String formattedDate = DateFormat('MM/dd/yyyy').format(DateTime.now());
 
@@ -51,6 +54,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     //dob field
                     dobInputField(!isDateSelect?'Date of Birth':formattedDate,selectedDate,() => _selectDate(context)),
                     Gap( 20.0.h),
+                    // inputTextField('District'),
+                    inputDropdownField('District',isDistrictOpen,() {
+                      setState(() {
+                        isDistrictOpen = !isDistrictOpen;
+                      });
+                    }),
+                    Gap( 20.0.h),
+                    inputDropdownField('Block',isBlockOpen,() {
+                      setState(() {
+                        isBlockOpen = !isBlockOpen;
+                      });
+                    }),
+                    Gap( 20.0.h),
                     inputTextField('Phone'),
                     Gap( 20.0.h),
                     emailInputFields('Email'),
@@ -60,16 +76,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         isVisible = !isVisible;
                       });
                     }),
-                    Gap( 20.0.h),
-                    inputTextField('Account Status'),
-                    Gap( 20.0.h),
-                    inputTextField('Account Status'),
-                    Gap( 20.0.h),
-                    inputTextField('District'),
-                    Gap( 20.0.h),
-                    inputTextField('Block'),
-                    Gap( 20.0.h),
-                    customButton('Register',() {})
+                    Gap( 10.0.h),
+                    checkAgreement('Agree to the Terms and policy',isChecked,() => setState(() {
+                      isChecked = !isChecked;
+                    }),),
+                    Gap( 10.0.h),
+                    customButton('Register',() {}),
                   ],
                 ),
               ),
@@ -84,7 +96,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDate,
-      firstDate: DateTime(2000),
+      firstDate: DateTime(1900),
       lastDate: DateTime(2101),
     );
     if (picked != null && picked != selectedDate) {
@@ -92,7 +104,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         // selectedDate = DateFormat.yM('en_US').parse(picked.toString());
         selectedDate = picked;
         isDateSelect = true;
-        formattedDate = DateFormat('MM/dd/yyyy').format(selectedDate);
+        formattedDate = DateFormat('dd/MM/yyyy').format(selectedDate);
       });
     }else{
       isDateSelect = false;
