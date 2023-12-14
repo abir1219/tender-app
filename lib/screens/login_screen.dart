@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
+import 'package:tender_app/res/app_pages.dart';
 import 'package:tender_app/screens/registration_screen.dart';
 
 import '../widgets/reusable_widgets.dart';
@@ -61,7 +63,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               customButton('Create an Account',() {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const RegistrationScreen(),));
+                // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const RegistrationScreen(),));
+                Get.toNamed(AppPages.Registration);
               })
 
             ],
