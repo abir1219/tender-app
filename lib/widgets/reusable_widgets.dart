@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-Widget emailInputFields(String hint,){
+Widget emailInputFields(String hint,TextEditingController controller){
   return TextFormField(
     keyboardType: TextInputType.emailAddress,
+    controller: controller,
     decoration: InputDecoration(
       labelText: hint,
       labelStyle: const TextStyle(color: Colors.white),
@@ -74,9 +75,10 @@ Widget inputTextField(String hint){
   );
 }
 
-Widget passwordInputFields(String hint,bool isVisible,void Function() func){
+Widget passwordInputFields(String hint,TextEditingController controller,bool isVisible,void Function() func){
   return TextFormField(
     obscureText: isVisible,
+    controller: controller,
     decoration: InputDecoration(
       labelText: hint,
       suffixIcon: IconButton(
@@ -99,7 +101,7 @@ Widget passwordInputFields(String hint,bool isVisible,void Function() func){
   );
 }
 
-Widget customButton(String buttonName,void Function() func){
+Widget customButton(String buttonName,void Function() func,bool isLoading){
   return ElevatedButton(
     onPressed: () => func(),
     style: ElevatedButton.styleFrom(
@@ -109,7 +111,17 @@ Widget customButton(String buttonName,void Function() func){
         ),
         backgroundColor: Colors.white
     ),
-    child: Text(buttonName,style: TextStyle(fontSize: 14.sp,color: Colors.black),),
+    child: isLoading?
+        Center(
+          child: SizedBox(
+            height: 20.h,
+            width: 20.w,
+            child: const CircularProgressIndicator(
+              backgroundColor: Colors.black,
+            ),
+          ),
+        )
+        :Text(buttonName,style: TextStyle(fontSize: 14.sp,color: Colors.black),),
   );
 }
 

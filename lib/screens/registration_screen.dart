@@ -69,19 +69,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     Gap( 20.0.h),
                     inputTextField('Phone'),
                     Gap( 20.0.h),
-                    emailInputFields('Email'),
+                    //emailInputFields('Email',),
                     Gap( 20.0.h),
-                    passwordInputFields('Password', isVisible, () {
-                      setState(() {
-                        isVisible = !isVisible;
-                      });
-                    }),
+                    // passwordInputFields('Password', isVisible, () {
+                    //   setState(() {
+                    //     isVisible = !isVisible;
+                    //   });
+                    // }),
                     Gap( 10.0.h),
                     checkAgreement('Agree to the Terms and policy',isChecked,() => setState(() {
                       isChecked = !isChecked;
                     }),),
                     Gap( 10.0.h),
-                    customButton('Register',() {}),
+                    customButton('Register',() {},true),
                   ],
                 ),
               ),

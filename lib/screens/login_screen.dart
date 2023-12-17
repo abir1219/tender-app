@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:tender_app/controller/login_controller.dart';
 import 'package:tender_app/res/app_pages.dart';
 import 'package:tender_app/screens/registration_screen.dart';
 
@@ -16,6 +17,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool isVisible = true;
+  var controller = Get.find<LoginController>();
 
   @override
   Widget build(BuildContext context) {
@@ -50,23 +52,25 @@ class _LoginScreenState extends State<LoginScreen> {
                                            ),
                      ),
                     Gap(30.0.h),
-                    emailInputFields("Email"),
+                    emailInputFields("Email",controller.emailController.value),
                     Gap(20.0.h),
-                    passwordInputFields("Password",isVisible,() {
+                    passwordInputFields("Password",controller.passwordController.value,isVisible,() {
                       setState(() {
                         isVisible = !isVisible;
                       });
                     }),
                     Gap(20.0.h),
-                    customButton('Login',() {})
+                    Obx(() =>  customButton('Login',() {
+                        controller.validation();
+                      },controller.isLoading.value),
+                    )
                   ],
                 ),
               ),
               customButton('Create an Account',() {
                 // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const RegistrationScreen(),));
                 Get.toNamed(AppPages.Registration);
-              })
-
+              },false),
             ],
           ),
         ),
