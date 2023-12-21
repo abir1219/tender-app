@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:tender_app/models/login_model.dart';
 import 'package:tender_app/repository/login_repository.dart';
+import 'package:tender_app/res/app_pages.dart';
 import 'package:tender_app/utils/utils.dart';
 
 
@@ -39,6 +40,9 @@ class LoginController extends GetxController{
       isLoading.value = false;
       // loginModel.value = LoginModel.fromJson(value);
       Utils.flutterToast(value['message']);
+      if(value['message'] == "Logged in successfully!"){
+        Get.offNamed(AppPages.Dashboard);
+      }
     }).onError((error, stackTrace){
       isLoading.value = false;
       Utils.flutterToast("Getting some error");

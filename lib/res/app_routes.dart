@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:tender_app/bindings/ragistration_binding.dart';
 import 'package:tender_app/res/app_pages.dart';
+import 'package:tender_app/screens/dashboard.dart';
 import 'package:tender_app/screens/login_screen.dart';
 import 'package:tender_app/screens/registration_screen.dart';
 
@@ -19,6 +20,12 @@ class AppRoutes{
         transitionDuration: const Duration(milliseconds: 800),
         transition: Transition.leftToRightWithFade,
         binding: RegistrationBinding()
+    ),
+    GetPage(name: AppPages.Dashboard,
+        page: () => const Dashboard(),
+        transitionDuration: const Duration(milliseconds: 800),
+        transition: Transition.leftToRightWithFade,
+        //binding: RegistrationBinding()
     ),
   ];
 }

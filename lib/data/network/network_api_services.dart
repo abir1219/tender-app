@@ -5,7 +5,10 @@ import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tender_app/data/network/base_api_services.dart';
+import 'package:tender_app/utils/app_constants.dart';
+import 'package:tender_app/utils/sharedpreference_utils.dart';
 
 import '../exceptions/app_exceptions.dart';
 
@@ -41,6 +44,8 @@ class NetworkApiServices extends BaseApiServices {
         debugPrint("COOKIE--->${response.headers['set-cookie']!}");
         Map<String, dynamic> decodedToken = JwtDecoder.decode(response.headers['set-cookie']!);
         debugPrint("COOKIE--->${decodedToken['_id']}");
+        await SharedPreferencesUtils.init();
+        SharedPreferencesUtils.saveString(AppConstants.USERID, decodedToken['_id']);
 
       }
 
