@@ -4,28 +4,35 @@ import 'package:tender_app/res/app_pages.dart';
 import 'package:tender_app/screens/dashboard.dart';
 import 'package:tender_app/screens/login_screen.dart';
 import 'package:tender_app/screens/registration_screen.dart';
+import 'package:tender_app/screens/splash_screen.dart';
 
+import '../bindings/dashboard_bindings.dart';
 import '../bindings/login_binding.dart';
 
 class AppRoutes{
   static appRoutes () => [
+    GetPage(name: AppPages.Splash,
+        page: () => const SplashScreen(),
+        transitionDuration: const Duration(milliseconds: 600),
+        transition: Transition.leftToRightWithFade,
+    ),
     GetPage(name: AppPages.Login,
         page: () => const LoginScreen(),
-        transitionDuration: const Duration(milliseconds: 800),
+        transitionDuration: const Duration(milliseconds: 600),
         transition: Transition.leftToRightWithFade,
         binding: LoginBinding()
     ),
     GetPage(name: AppPages.Registration,
         page: () => const RegistrationScreen(),
-        transitionDuration: const Duration(milliseconds: 800),
+        transitionDuration: const Duration(milliseconds: 600),
         transition: Transition.leftToRightWithFade,
         binding: RegistrationBinding()
     ),
     GetPage(name: AppPages.Dashboard,
         page: () => const Dashboard(),
-        transitionDuration: const Duration(milliseconds: 800),
+        transitionDuration: const Duration(milliseconds: 600),
         transition: Transition.leftToRightWithFade,
-        //binding: RegistrationBinding()
+        binding: DashboardBindings()
     ),
   ];
 }
