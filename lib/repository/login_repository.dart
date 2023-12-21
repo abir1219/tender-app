@@ -5,10 +5,10 @@ import 'package:tender_app/helper/api_end_points.dart';
 class LoginRepository{
   final _apiCall = NetworkApiServices();
 
-  Future<dynamic> login() async{
+  Future<dynamic> login(var body) async{
     var url = ApiEndPoints.BASE_URL + ApiEvent.login;
     debugPrint("LOGIN_URL==>$url");
-    dynamic response = _apiCall.getApi(url);
+    dynamic response = _apiCall.postApi(url,body);
     return response;
   }
 }

@@ -28,10 +28,17 @@ class LoginController extends GetxController{
   }
 
   Future<void> _login() async{
+
+    Map<String,dynamic> body = {
+      'email': emailController.value.text,
+      'password': passwordController.value.text,
+    };
+
     isLoading.value = true;
-    _loginRepo.login().then((value){
+    _loginRepo.login(body).then((value){
       isLoading.value = false;
       // loginModel.value = LoginModel.fromJson(value);
+      Utils.flutterToast(value['message']);
     }).onError((error, stackTrace){
       isLoading.value = false;
       Utils.flutterToast("Getting some error");

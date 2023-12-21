@@ -1,5 +1,5 @@
 class ApiEndPoints{
-  static const String BASE_URL = "https://wbtenders.onrender.com/";
+  static const String BASE_URL = "https://wbtenders.onrender.com/api/";
 
 
 }
