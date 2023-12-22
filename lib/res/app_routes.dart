@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
+import 'package:tender_app/bindings/profile_binding.dart';
 import 'package:tender_app/bindings/ragistration_binding.dart';
 import 'package:tender_app/res/app_pages.dart';
 import 'package:tender_app/screens/dashboard.dart';
 import 'package:tender_app/screens/login_screen.dart';
+import 'package:tender_app/screens/profile_screen.dart';
 import 'package:tender_app/screens/registration_screen.dart';
 import 'package:tender_app/screens/splash_screen.dart';
 
@@ -33,6 +35,12 @@ class AppRoutes{
         transitionDuration: const Duration(milliseconds: 600),
         transition: Transition.leftToRightWithFade,
         binding: DashboardBindings()
+    ),
+    GetPage(name: AppPages.Profile,
+        page: () => const ProfileScreen(),
+        transitionDuration: const Duration(milliseconds: 600),
+        transition: Transition.leftToRightWithFade,
+        binding: ProfileBinding()
     ),
   ];
 }

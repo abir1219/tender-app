@@ -21,8 +21,10 @@ class _ReportScreenState extends State<ReportScreen> {
       body: GridView.builder(
         shrinkWrap: true,
         gridDelegate:
-        const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
-        childAspectRatio: 1.2,),
+        SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
+        crossAxisSpacing: 1.sp,
+        mainAxisSpacing: 3.sp,
+        childAspectRatio: 1.2.sp),
         itemBuilder: (context, index) {
         return _buildReport();
       },itemCount: 4,),
@@ -43,7 +45,7 @@ class _ReportScreenState extends State<ReportScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(child: Text("1",
-                style: TextStyle(color: Colors.grey,fontSize: 16.sp,fontWeight: FontWeight.bold),)),
+                style: TextStyle(color: Colors.black,fontSize: 22.sp,fontWeight: FontWeight.bold,fontFamily: 'Poppins'),)),
               Container(
                 height: 30.h,
                 width: 30.w,

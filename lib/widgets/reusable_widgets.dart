@@ -195,3 +195,17 @@ Widget checkAgreement(String text,bool isChecked,void Function() func){
   );
 }
 
+Widget reusableProfileField({required String labelText,required String text}){
+  return InputDecorator(
+    decoration: InputDecoration(
+      labelText: labelText,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+    ),
+    child: Text(text,style: TextStyle(fontFamily: 'Poppins',
+        color: Colors.black,
+        fontSize: 14.sp,fontWeight: FontWeight.normal)),
+  );
+}
+

@@ -3,4 +3,5 @@ class AppPages{
   static const String Login = "/login";
   static const String Registration = "/registration";
   static const String Dashboard = "/dashboard";
+  static const String Profile = "/profile";
 }

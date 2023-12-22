@@ -6,4 +6,5 @@ class ApiEndPoints{
 
 class ApiEvent{
   static const String login = "login/user";
+  static const String profile = "user/";
 }

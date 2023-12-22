@@ -19,7 +19,7 @@ class NetworkApiServices extends BaseApiServices {
   @override
   Future<dynamic> getApi(String url) async {
     try {
-      final response = await dio.get(url, options: Options(headers: {}));
+      final response = await http.get(Uri.parse(url),);
       responseJson = returnResponse(response);
     } on SocketException {
       throw InternetException('');
