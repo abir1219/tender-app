@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:tender_app/utils/utils.dart';
 
@@ -24,7 +25,8 @@ class _PasswordDialogScreenState extends State<PasswordDialogScreen> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Update Password'),
+      backgroundColor: Colors.blueAccent,
+      title: const Text('Update Password',style: TextStyle(color: Colors.white),),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -40,6 +42,7 @@ class _PasswordDialogScreenState extends State<PasswordDialogScreen> {
               isCurrentPasswordVisible = !isCurrentPasswordVisible;
             });
           }),
+          Gap(20.h),
           passwordInputFields('New Password', controller.newPassword.value, isCurrentPasswordVisible, () {
             setState(() {
               isCurrentPasswordVisible = !isCurrentPasswordVisible;
@@ -55,9 +58,9 @@ class _PasswordDialogScreenState extends State<PasswordDialogScreen> {
         ],
       ),
       actions: <Widget>[
-        ElevatedButton(
+        /*ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.black,
+            backgroundColor: Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8)
             )
@@ -71,11 +74,12 @@ class _PasswordDialogScreenState extends State<PasswordDialogScreen> {
                 child: SizedBox(
                   height: 24.h,
                   width: 24.w,
-                  child: const CircularProgressIndicator(color: Colors.white,),
+                  child: const CircularProgressIndicator(color: Colors.black,),
                 ),
               )
               :const Text('Update Password')),
-        ),
+        ),*/
+        customButton('Save', () { validation();}, controller.isChangeLoading.value)
       ],
     );
   }
@@ -85,9 +89,18 @@ class _PasswordDialogScreenState extends State<PasswordDialogScreen> {
       Utils.flutterToast("Please enter your current password");
     }else if(controller.newPassword.value.text.isEmpty){
       Utils.flutterToast("Please enter your new password");
-    }else {
+    }
+    else if(controller.newPassword.value.text == controller.oldPassword.value.text){
+      Utils.flutterToast("Old password and new password should not match");
+    }
+    else {
       controller.changePassword((response) {
-        //if(response[])
+        if(response[1] == 200){
+          Navigator.of(context).pop();
+          Utils.flutterToast(response[0]);
+        }else{
+
+        }
       });
     }
   }

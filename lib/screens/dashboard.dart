@@ -22,8 +22,8 @@ class _DashboardState extends State<Dashboard> {
         BottomNavigationBar(
           showSelectedLabels: false,
           showUnselectedLabels: false,
-          // backgroundColor: const Color(0xFF1b293a),
-          backgroundColor: Colors.amber,
+          backgroundColor: const Color(0xFF1b293a),
+          //backgroundColor: Colors.amber,
           currentIndex: controller.pageIndex.value,
           onTap: (value) {
             controller.pageIndex.value = value;

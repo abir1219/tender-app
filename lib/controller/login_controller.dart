@@ -10,6 +10,7 @@ class LoginController extends GetxController{
   final _loginRepo = LoginRepository();
   Rx<LoginModel> loginModel = LoginModel().obs;
   RxBool isLoading = false.obs;
+  var statusCode = 0;
 
   Rx<TextEditingController> emailController = TextEditingController().obs;
   Rx<TextEditingController> passwordController = TextEditingController().obs;
@@ -34,14 +35,18 @@ class LoginController extends GetxController{
       'email': emailController.value.text,
       'password': passwordController.value.text,
     };
-
     isLoading.value = true;
+
     _loginRepo.login(body).then((value){
       isLoading.value = false;
       // loginModel.value = LoginModel.fromJson(value);
-      Utils.flutterToast(value['message']);
-      if(value['message'] == "Logged in successfully!"){
+      debugPrint("Value-->$value");
+      // if(value['message'] == "Logged in successfully!"){
+      if(value[1] == 200){
+        Utils.flutterToast(value[0]['message']);
         Get.offNamed(AppPages.Dashboard);
+      }else{
+        Utils.flutterToast("Invalid username or password");
       }
     }).onError((error, stackTrace){
       isLoading.value = false;

@@ -10,6 +10,7 @@ import '../utils/app_constants.dart';
 class ProfileController extends GetxController{
   final _repo = ProfileRepository();
   Rx<bool> isLoading = false.obs;
+  Rx<bool> isChangeLoading = false.obs;
 
   Rx<ProfileModel> profileModel = ProfileModel().obs;
   Rx<TextEditingController> oldPassword = TextEditingController().obs;
@@ -19,7 +20,7 @@ class ProfileController extends GetxController{
     isLoading.value = true;
     _repo.getProfile().then((value) {
       isLoading.value = false;
-      profileModel.value = ProfileModel.fromJson(value);
+      profileModel.value = ProfileModel.fromJson(value[0]);
     }).onError((error, stackTrace) {
       isLoading.value = false;
       Utils.flutterToast("Getting some troubles");
@@ -28,18 +29,22 @@ class ProfileController extends GetxController{
   }
 
   Future<void> changePassword(void Function(dynamic response) func) async{
-    isLoading.value = true;
+    await SharedPreferencesUtils.init();
+    isChangeLoading.value = true;
     Map<String,dynamic> body = {
       'user_id' : SharedPreferencesUtils.getString(AppConstants.USERID),
       'current_password': oldPassword.value.text,
       'new_password': newPassword.value.text,
     };
 
+    debugPrint("BODY--->$body");
+
     _repo.changePassword(body).then((value) {
-      isLoading.value = false;
-      func(value);
+      isChangeLoading.value = false;
+      debugPrint("VALUE--->$value");
+      //func(value);
     }).onError((error, stackTrace) {
-      isLoading.value = false;
+      isChangeLoading.value = false;
       Utils.flutterToast("Getting some troubles");
       debugPrint("CHANGE_PASSWORD_ERROR--->$error");
     });

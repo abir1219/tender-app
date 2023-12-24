@@ -39,7 +39,7 @@ class NetworkApiServices extends BaseApiServices {
     try {
        // final response = await dio.post(url, data: jsonEncode(body), options: Options(headers: headers));
       var response = await http.post(Uri.parse(url), body: jsonEncode(body), headers: headers);
-      //debugPrint("POST--->$url ${jsonDecode(response.headers.containsKey('set-cookie').toString())}");
+      debugPrint("POST--->$url ${response.body}");
       if(response.headers.containsKey('set-cookie')){
         debugPrint("COOKIE--->${response.headers['set-cookie']!}");
         Map<String, dynamic> decodedToken = JwtDecoder.decode(response.headers['set-cookie']!);
@@ -67,7 +67,7 @@ class NetworkApiServices extends BaseApiServices {
       //   // jsonDecode(response.body);
       //   return responseJSON;
       case 200:
-        dynamic responseJSON = jsonDecode(response.body);
+        dynamic responseJSON = [jsonDecode(response.body),response.statusCode];
         return responseJSON;
       case 400:
         throw FetchDataException();
@@ -82,8 +82,8 @@ class NetworkApiServices extends BaseApiServices {
 
     try {
       // final response = await dio.post(url, data: jsonEncode(body), options: Options(headers: headers));
-      var response = await http.post(Uri.parse(url), body: jsonEncode(body), headers: headers);
-      //debugPrint("POST--->$url ${jsonDecode(response.headers.containsKey('set-cookie').toString())}");
+      var response = await http.put(Uri.parse(url), body: jsonEncode(body), headers: headers);
+      debugPrint("POST--->$url ${response.body}");
       if(response.headers.containsKey('set-cookie')){
         debugPrint("COOKIE--->${response.headers['set-cookie']!}");
         Map<String, dynamic> decodedToken = JwtDecoder.decode(response.headers['set-cookie']!);
@@ -94,6 +94,7 @@ class NetworkApiServices extends BaseApiServices {
       }
 
       responseJson = returnResponse(response);
+      debugPrint("responseJson--->$responseJson");
     } on SocketException {
       throw InternetException('Internet Exception');
     } on RequestTimeOut {
