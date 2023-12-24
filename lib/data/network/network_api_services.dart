@@ -73,4 +73,33 @@ class NetworkApiServices extends BaseApiServices {
         throw FetchDataException();
     }
   }
+
+  @override
+  Future<dynamic> putApi(String url, dynamic body) async {
+    Map<String, String> headers = {
+      'Content-Type': 'application/json'
+    };
+
+    try {
+      // final response = await dio.post(url, data: jsonEncode(body), options: Options(headers: headers));
+      var response = await http.post(Uri.parse(url), body: jsonEncode(body), headers: headers);
+      //debugPrint("POST--->$url ${jsonDecode(response.headers.containsKey('set-cookie').toString())}");
+      if(response.headers.containsKey('set-cookie')){
+        debugPrint("COOKIE--->${response.headers['set-cookie']!}");
+        Map<String, dynamic> decodedToken = JwtDecoder.decode(response.headers['set-cookie']!);
+        debugPrint("COOKIE--->${decodedToken['_id']}");
+        await SharedPreferencesUtils.init();
+        SharedPreferencesUtils.saveString(AppConstants.USERID, decodedToken['_id']);
+
+      }
+
+      responseJson = returnResponse(response);
+    } on SocketException {
+      throw InternetException('Internet Exception');
+    } on RequestTimeOut {
+      throw RequestTimeOut('Request Timeout');
+    }
+
+    return responseJson;
+  }
 }

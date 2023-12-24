@@ -1,5 +1,11 @@
-import 'package:flutter/material.dart';
+import 'dart:ffi';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:tender_app/utils/utils.dart';
+
+import '../controller/profile_controller.dart';
 import '../widgets/reusable_widgets.dart';
 
 class PasswordDialogScreen extends StatefulWidget {
@@ -11,8 +17,9 @@ class PasswordDialogScreen extends StatefulWidget {
 
 class _PasswordDialogScreenState extends State<PasswordDialogScreen> {
 
-  TextEditingController _oldPasswordController = TextEditingController();
-  TextEditingController _newPasswordController = TextEditingController();
+  var controller = Get.find<ProfileController>();
+  var isCurrentPasswordVisible = false;
+  var isOldPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -21,20 +28,30 @@ class _PasswordDialogScreenState extends State<PasswordDialogScreen> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          TextField(
-            controller: _oldPasswordController,
+          /*TextField(
+            controller: controller.oldPassword.value,
             obscureText: true,
             decoration: const InputDecoration(
               labelText: 'Old Password',
             ),
-          ),
-          TextField(
-            controller: _newPasswordController,
+          ),*/
+          passwordInputFields('Current Password', controller.oldPassword.value, isCurrentPasswordVisible, () {
+            setState(() {
+              isCurrentPasswordVisible = !isCurrentPasswordVisible;
+            });
+          }),
+          passwordInputFields('New Password', controller.newPassword.value, isCurrentPasswordVisible, () {
+            setState(() {
+              isCurrentPasswordVisible = !isCurrentPasswordVisible;
+            });
+          }),
+          /*TextField(
+            controller: controller.newPassword.value,
             obscureText: true,
             decoration: const InputDecoration(
               labelText: 'New Password',
             ),
-          ),
+          ),*/
         ],
       ),
       actions: <Widget>[
@@ -46,21 +63,32 @@ class _PasswordDialogScreenState extends State<PasswordDialogScreen> {
             )
           ),
           onPressed: () {
-            // You can add your logic here to handle the updated password
-            String oldPassword = _oldPasswordController.text;
-            String newPassword = _newPasswordController.text;
-
-            // Perform password update logic, e.g., call an API, update state, etc.
-            // For demonstration purposes, printing the passwords here
-            print('Old Password: $oldPassword');
-            print('New Password: $newPassword');
-
-            // Close the dialog
-            Navigator.of(context).pop();
+            validation();
+            //Navigator.of(context).pop();
           },
-          child: const Text('Update Password'),
+          child: Obx(() => controller.isLoading.value?
+              Center(
+                child: SizedBox(
+                  height: 24.h,
+                  width: 24.w,
+                  child: const CircularProgressIndicator(color: Colors.white,),
+                ),
+              )
+              :const Text('Update Password')),
         ),
       ],
     );
+  }
+
+  void validation() {
+    if(controller.oldPassword.value.text.isEmpty){
+      Utils.flutterToast("Please enter your current password");
+    }else if(controller.newPassword.value.text.isEmpty){
+      Utils.flutterToast("Please enter your new password");
+    }else {
+      controller.changePassword((response) {
+        //if(response[])
+      });
+    }
   }
 }

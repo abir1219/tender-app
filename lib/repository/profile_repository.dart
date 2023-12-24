@@ -12,4 +12,11 @@ class ProfileRepository{
     dynamic response = _apiClient.getApi(url);
     return response;
   }
+
+  Future<dynamic> changePassword(var body) async{
+    await SharedPreferencesUtils.init();
+    var url = ApiEndPoints.BASE_URL + ApiEvent.change_passwod;
+    dynamic response = _apiClient.putApi(url,body);
+    return response;
+  }
 }
