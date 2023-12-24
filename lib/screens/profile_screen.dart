@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tender_app/controller/profile_controller.dart';
+import 'package:tender_app/screens/password_dialog_screen.dart';
+import 'package:tender_app/utils/utils.dart';
 
 import '../widgets/reusable_widgets.dart';
 
@@ -28,6 +30,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            actions: [
+              PopupMenuButton<String>(
+                onSelected: (String result) {
+                  print('Selected: $result');
+                },
+                offset: Offset(0, 45.h),
+                icon: const Icon(Icons.settings,color: Colors.black,),
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                  PopupMenuItem<String>(
+                    value: 'Change Password',
+                    child: const Text('Change Password'),
+                    onTap: () => showDialog(context: context, builder: (BuildContext context) {
+                      return const PasswordDialogScreen();
+                    },),
+                  ),
+                  const PopupMenuItem<String>(
+                    value: 'Logout',
+                    child: Text('Logout'),
+                    //onTap: () => null
+                  ),
+                ],
+              ),
+            ],
+          ),
       body: SizedBox(
         width: double.infinity,
         child: Obx(() => controller.isLoading.value?
@@ -47,7 +77,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Container(
                       height: 100.h,
                       width: 100.w,
-                      margin: EdgeInsets.only(top: 50.h),
+                      //margin: EdgeInsets.only(top: 50.h),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(100.sp),
                         //color: Colors.red
@@ -66,10 +96,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   Positioned(
-                      top: 10,
+                      top: 0,
                       right: MediaQuery.of(context).size.width * .41,
                       child: Container(
-                        margin: EdgeInsets.only(top: 40.h),
+                        //margin: EdgeInsets.only(top: 40.h),
                         height: 16.h,
                         width: 16.w,
                         decoration: BoxDecoration(
